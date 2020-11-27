@@ -1,0 +1,217 @@
+/* ヘッダー */
+body{
+  margin-top: 0;
+}
+.header_box{
+  text-align: center;
+}
+h1 img{
+  width: 10%;
+}
+.clearfix::after{
+  content:"";
+  display: block;
+  clear: both;
+}
+#form2{
+  float: left;
+  margin-left: 3%;
+}
+#shopping_icon{
+  float: right;
+  font-size: 21px;
+  width: 100px;
+  margin-top: -0.4%;
+}
+#shopping_icon a{
+    color: black;
+}
+/* メニュー */
+.navi_top li{
+  display: inline-block;
+}
+.navi_top{
+text-align: center;
+margin-top: 5%;
+}
+.list{
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding-left: 11%;
+  width: 50%;
+}
+.list li{
+  font-weight: bold;
+}
+.list li a{
+  color: black;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  text-decoration: none;
+}
+/* カテゴリードロップダウン */
+.list ul{
+  margin: 0;
+  margin-top: -8px;
+  padding: 0;
+}
+.list ul li{
+  list-style: none;
+  position: relative;
+  width: 110px;/*親メニューの幅*/
+  line-height: 40px;
+  color: #000000;;/*親メニューの文字色*/
+  text-align:center;
+}
+.list ul li a {
+  display: block;
+  text-decoration: none;
+}
+.list ul li:hover, .list ul li a:hover {
+  background: #000000;;/*ホバー時の親メニューの背景色*/
+  color:#fff;/*ホバー時の親メニューの文字色*/
+}
+.list ul li ul {
+  position: absolute;
+  top: 40px;/*親メニューの高さと同じにする*/
+  width: 100px;
+  z-index: 100;
+}
+.list ul li ul li {
+  visibility: hidden;
+  overflow: hidden;
+  width: 110px;/*サブメニューの幅*/
+  height: 0;
+  background: #757575;;/*サブメニューの背景色*/
+}
+.list ul li ul li:hover, .list ul li ul li a:hover {
+  background: #000000;;/*ホバー時のサブメニューの背景色*/
+}
+.list ul li:hover ul li, .list ul li a:hover ul li{
+  visibility: visible;
+  overflow: visible;
+  height:40px;/*サブメニューの高さ*/
+  z-index: 10;
+}
+.list * {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+/* ドロップダウン */
+.menu{
+  float: right;
+}
+.menu ul{
+  margin: 0;
+  margin-top: -5%;
+  padding: 0;
+}
+.menu ul li{
+  list-style: none;
+  margin:0;
+  padding:0;
+  font-size:15px;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  position: relative;
+  width: 100px;/*親メニューの幅*/
+  height: 40px;/*親メニューの高さ*/
+  line-height: 40px;
+  background: #000000;;/*親メニューの背景色*/
+  color: #fff;/*親メニューの文字色*/
+  text-align:center;
+  font-weight:bold;
+}
+.menu ul li a {
+  color: #fff;
+  display: block;
+  text-decoration: none;
+}
+.menu ul li:hover, .menu ul li a:hover {
+  background: #000000;;/*ホバー時の親メニューの背景色*/
+  color:#fff;/*ホバー時の親メニューの文字色*/
+}
+.menu ul li ul {
+  position: absolute;
+  top: 40px;/*親メニューの高さと同じにする*/
+  width: 100px;
+  z-index: 100;
+}
+.menu ul li ul li {
+  visibility: hidden;
+  overflow: hidden;
+  width: 100px;/*サブメニューの幅*/
+  height: 0;
+  background: #757575;;/*サブメニューの背景色*/
+}
+.menu ul li ul li:hover, .menu ul li ul li a:hover {
+  background: #000000;;/*ホバー時のサブメニューの背景色*/
+}
+.menu ul li:hover ul li, .menu ul li a:hover ul li{
+  visibility: visible;
+  overflow: visible;
+  height:40px;/*サブメニューの高さ*/
+  z-index: 10;
+}
+.menu * {
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  transition: 0.5s;
+}
+
+/* プロフィール */
+.profile{
+  margin-top: 5%;
+  text-align: center;
+  border-bottom: 1px solid black;
+  width: 100%;
+  padding-bottom: 5%;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+}
+.profile p{
+  letter-spacing: .20em;
+  line-height: 300%;
+  font-size: 12px;
+}
+.profile img{
+  width: 20%;
+}
+.item{
+  margin-top: 3%;
+}
+/* リンク */
+.social_icons{
+  text-align: center;
+}
+.social_icons a{
+    color: black;
+    padding: 2%;
+}
+.link{
+  text-align: center;
+  margin-top: 5%;
+}
+.contact{
+  margin-top: 2%;
+}
+.contact a{
+  font-size: 15px;
+  font-family: "ヒラギノ明朝 ProN";
+  text-decoration: none;
+}
+
+/* フッター */
+footer{
+  text-align: center;
+  color: black;
+  font-family: "ヒラギノ明朝 ProN";
+  font-size: 10px;
+  margin-top: 2%;
+}

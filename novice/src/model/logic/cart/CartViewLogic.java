@@ -14,15 +14,18 @@ public class CartViewLogic {
 	ResultSet rs = null;
 	List<CartItem> cartItems = new ArrayList<>();
 
-	public List<CartItem> viewCart(String customerMail){
+	public List<CartItem> viewCart(int customerId){
 		try {
-		rs = dao.viewCartItem(customerMail);
+		rs = dao.viewCartItem(customerId);
 
 		// 検索結果が存在する場合cartItemsにCartItemインスタンスをセットしていく
 		while(rs.next()) {
 			CartItem item = new CartItem();
 			item.setProductCode(rs.getString("PRODUCT_C"));
 			item.setProductName(rs.getString("PRODUCTNAME"));
+			item.setIndividualCode(rs.getString("PRODUCT_INDV"));
+			item.setSize(rs.getString("SIZE"));
+			item.setType(rs.getString("TYPE"));
 			item.setPrice(rs.getInt("PRICE"));
 			item.setQuantity(rs.getInt("QUANTITY"));
 			item.setSum(item.getPrice() * item.getQuantity());

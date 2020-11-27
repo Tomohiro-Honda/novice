@@ -1,7 +1,7 @@
 package dao;
 
+import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +10,6 @@ import java.sql.Timestamp;
 import model.beans.Customer;
 
 public class CustomerDAO {
-	//データベース接続に使用する情報
-	private final String JDBC_URL = "jdbc:mysql://localhost:3306/novice_db";
-	private final String USER_NAME = "test";
-	private final String PASSWORD = "test";
-
 	private Connection conn = null;
 	private PreparedStatement pStmt = null;
 	private ResultSet rs = null;
@@ -23,7 +18,7 @@ public class CustomerDAO {
 	public ResultSet check(String mail) {
 		//判定用変数
 		try {
-			conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+			conn = DBConnection.getConnection();
 			String sql = "SELECT MAIL FROM Customers WHERE MAIL = ?";
 			pStmt = conn.prepareStatement(sql);
 			//INSERT文中の[？]に使用する値を設定しSQLを完成
@@ -32,14 +27,17 @@ public class CustomerDAO {
 
 		}catch (SQLException e) {
 			e.printStackTrace();
-		}
+		}catch (URISyntaxException e) {
+            e.printStackTrace();
+            return null;
+        }
 		return rs;
 	}
 
 	/**--------------------ユーザーの情報をデータベースへ登録する--------------------**/
 	public boolean create(Customer customer) {
 		try {
-				conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+				conn =DBConnection.getConnection();
 			//idは自動連番なので指定しなくてよい
 			String sql = "INSERT INTO Customers(LASTNAME, FIRSTNAME,  MAIL, PASS,  POSTAL, "
 					+ "PREFECTURE, MUNICIPALITY, STREETADRESS, TELL, TIME) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
@@ -65,14 +63,17 @@ public class CustomerDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}catch (URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
 		return true;
 	}
 
 	/**--------------------アカウント情報の変更（メールアドレスとパスワード以外）--------------------**/
 	public boolean changeInfo(Customer ciCustomer){
 		try {
-			conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+			conn = DBConnection.getConnection();
 			String sql = "UPDATE Customers SET LASTNAME = ?, FIRSTNAME = ?, POSTAL = ?, "
 					+ "PREFECTURE = ?, MUNICIPALITY = ?, STREETADRESS = ?, TELL = ? WHERE MAIL = ?";
 			pStmt = conn.prepareStatement(sql);
@@ -95,14 +96,17 @@ public class CustomerDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}catch (URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
 		return true;
 	}
 
 	/**---------------------メールアドレス変更---------------------**/
 	public boolean changeMail(String oldMail, String newMail) {
 		try {
-			conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+			conn = DBConnection.getConnection();
 			String sql = "UPDATE Customers SET MAIL = ? WHERE MAIL = ?";
 			pStmt = conn.prepareStatement(sql);
 
@@ -118,7 +122,10 @@ public class CustomerDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}catch (URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
 		return true;
 
 	}
@@ -126,7 +133,7 @@ public class CustomerDAO {
 	/**--------------------パスワード変更--------------------**/
 	public boolean changePass(String newPassA, String mail) {
 		try {
-			conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+			conn = DBConnection.getConnection();
 			String sql = "UPDATE Customers SET PASS = ? WHERE MAIL = ?";
 			pStmt = conn.prepareStatement(sql);
 
@@ -142,7 +149,10 @@ public class CustomerDAO {
 		}catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}catch (URISyntaxException e) {
+            e.printStackTrace();
+            return false;
+        }
 		return true;
 
 	}

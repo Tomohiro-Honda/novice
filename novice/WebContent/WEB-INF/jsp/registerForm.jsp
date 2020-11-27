@@ -6,13 +6,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>新規会員登録</title>
-	<script type="text/javascript" src="/novice/js/registerScript.js"></script>
+	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="../js/registerScript.js"></script>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 	integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="/novice/css/style.css">
-
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="icon" type="image/png" href="../favicon.png" sizes="16x16 24x24 32x32 48x48 64x64" />
 </head>
 <body>
 	<div class="container">
@@ -28,14 +29,14 @@
 		</div>
 
 		<div class="form">
-			<form action="/novice/RegisterUser" method="post">
+			<form action="../RegisterUser" method="post">
 
 				<dl class="form_list">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-3 text-nowrap">
 							<dt class="input_title">お名前</dt>
 						</div>
-						<div class="col-sm-9">
+						<div class="col-sm-9 text-nowrap">
 							<dd class="form_list_input">
 						 			<label class="input_first_name" for="lastName">姓</label> <input type="text" name="lastName" required>
 						 			<label for="firstName">名</label> <input type="text" name="firstName" required>
@@ -46,7 +47,7 @@
 
 				<dl class="form_list">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-3 text-nowrap">
 							<dt class="input_title">メールアドレス</dt>
 						</div>
 						<div class="col-sm-9">
@@ -62,7 +63,7 @@
 
 				<dl class="form_list">
 					<div class="row">
-						<div class="col-sm-3">
+						<div class="col-sm-3 text-nowrap">
 							<dt class="input_title">パスワード</dt>
 					</div>
 					<div class="col-sm-9">
@@ -83,25 +84,25 @@
 
 			<dl class="form_list">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-3 text-nowrap">
 					<dt class="input_title">郵便番号</dt>
 				</div>
 				<div class="col-sm-9">
 					<dd class="form_list_input">
-						<input type="text" placeholder="例）1080078" name="postal" pattern="^[0-9]{7}$"
-									title="ハイフンなし7桁の数字で入力してください"required>
+						<input type="text" placeholder="例）1080078" name="zip01" pattern="^[0-9]{7}$"
+									title="ハイフンなし7桁の数字で入力してください"required onKeyUp="AjaxZip3.zip2addr(this,'','pref01','addr01');">
 					</dd>
 				</div>
 			</dl>
 
 			<dl class="form_list">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-3 text-nowrap">
 						<dt class="input_title">都道府県</dt>
 					</div>
 				<div class="col-sm-9">
 					<dd class="form_list_input">
-						<select name="pref" required>
+						<select  name="pref01" required>
 							<option value="" selected>都道府県</option>
 								<option value="北海道">北海道</option>
 								<option value="青森県">青森県</option>
@@ -157,19 +158,19 @@
 
 			<dl class="form_list">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-3 text-nowrap">
 					<dt class="input_title">市町村</dt>
 				</div>
 				<div class="col-sm-9">
 					<dd class="form_list_input">
-						<input class="input_adress" type="text" name="muni" required>
+						<input class="input_adress" type="text" name="addr01" required>
 					</dd>
 				</div>
 			</dl>
 
 			<dl class="form_list">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-3 text-nowrap">
 					<dt class="input_title">番地以降</dt>
 				</div>
 				<div class="col-sm-9">
@@ -181,7 +182,7 @@
 
 			<dl class="form_list">
 				<div class="row">
-					<div class="col-sm-3">
+					<div class="col-sm-3 text-nowrap">
 					<dt class="input_title">電話番号</dt>
 				</div>
 				<div class="col-sm-9">
@@ -194,7 +195,7 @@
 			<dl class="form_list">
 				<div class="row justify-content-sm-center">
 					<div class="col-sm-auto">
-						<a href="/novice/index.jsp" class="btn btn-outline-dark">TOP</a>
+						<a href="../index.jsp" class="btn btn-outline-dark">TOP</a>
 						<input class="btn btn-dark" type="submit" value="確認">
 					</div>
 				</div>

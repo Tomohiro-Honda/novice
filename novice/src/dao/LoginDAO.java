@@ -1,18 +1,12 @@
 package dao;
 
+import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginDAO {
-
-	//データベース接続に使用する情報
-		private final String JDBC_URL = "jdbc:mysql://localhost:3306/novice_db";
-		private final String USER_NAME = "test";
-		private final String PASSWORD = "test";
-
 		private Connection conn = null;
 		private ResultSet  rs  = null;
 		private PreparedStatement pStmt = null;
@@ -22,7 +16,7 @@ public class LoginDAO {
 
 		//データベース接続
 				try{
-					conn = DriverManager.getConnection(JDBC_URL, USER_NAME, PASSWORD);
+					conn = DBConnection.getConnection();
 					String sql = "SELECT * FROM Customers WHERE MAIL = ? AND PASS = ?";
 					pStmt = conn.prepareStatement(sql);
 
@@ -35,8 +29,10 @@ public class LoginDAO {
 				}catch (SQLException se) {
 					// データベースとの接続解除に失敗した場合
 					se.printStackTrace();
-				}return rs;
-
+				}catch (URISyntaxException e) {
+	                e.printStackTrace();
+	                return null;
+	            }return rs;
 	}
 
 	public void close() {

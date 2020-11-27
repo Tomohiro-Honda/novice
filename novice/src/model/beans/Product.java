@@ -6,8 +6,12 @@ public class Product implements Serializable{
 //	private int id;//商品ID
 	private String productCode; //商品コード
 	private String productName; //商品名
+	private String individualCode; //商品個別コード
 	private int price ; //価格
 	private int stock; //在庫数
+	private String size; //サイズ
+	private String type;//色など
+	private String text;//説明
 
 	public Product() {}
 
@@ -43,6 +47,14 @@ public class Product implements Serializable{
 		this.productName = productName;
 	}
 
+	public String getIndividualCode() {
+		return individualCode;
+	}
+
+	public void setIndividualCode(String individualCode) {
+		this.individualCode = individualCode;
+	}
+
 	public int getPrice() {
 		return price;
 	}
@@ -57,6 +69,30 @@ public class Product implements Serializable{
 
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 
 

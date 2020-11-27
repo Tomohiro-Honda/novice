@@ -6,14 +6,14 @@ import java.sql.SQLException;
 import dao.CartDAO;
 
 public class CartCheckLogic {
-	public int addCart(String customerMail, String productCode) {
+	public int addCart(int customerId, String indivCode ) {
 		CartDAO dao = null;
 		ResultSet rs = null;
 		int quantityInCart = 0;
 
 		try {
 			dao = new CartDAO();
-			rs = dao.cartCheck(customerMail, productCode);
+			rs = dao.cartCheck(customerId, indivCode);
 				if(rs.next() == true) {
 					quantityInCart = rs.getInt("QUANTITY");
 				}

@@ -6,11 +6,11 @@ import dao.CartDAO;
 
 public class DeleteItemLogic {
 
-	public void delete(String customerMail, List<String>delcodes) {
+	public void delete(int customerId, List<String>delcodes) {
 		CartDAO dao = null;
 		try {
 			dao = new CartDAO();
-			dao.deleteItems(customerMail, delcodes);
+			dao.deleteItems(customerId, delcodes);
 		} finally {
 			// 処理終了時に各接続を解除
 			dao.close();

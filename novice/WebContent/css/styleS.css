@@ -1,0 +1,765 @@
+* {
+  margin: 0;
+  padding: 0;
+  }
+  
+/* ヘッダー */
+.header_box{
+  text-align: center;
+}
+h1 img{
+  width: 100px;
+  margin-top: 3%;
+}
+.clearfix::after{
+  content:"";
+  display: block;
+  clear: both;
+}
+#form2{
+  float: left;
+  margin-left: 3%;
+  margin-top: 1%;
+}
+#shopping_icon{
+  float: right;
+  font-size: 20px;
+  width: 100px;
+}
+#shopping_icon a{
+    color: black;
+    width: 40px;
+}
+.list2{
+  display: none;
+}
+/* メニュー */
+.navi_top li{
+  display: inline-block;
+}
+.navi_top{
+text-align: center;
+margin-top: 5%;
+}
+.list{
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  padding: 1% 10%;
+  margin-bottom: 0;
+}
+.list li{
+  font-weight: bold;
+}
+.list li a{
+  color: black;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  text-decoration: none;
+}
+.top_img video{
+  width: 100%;
+  background-color: #000000;
+}
+/* メニュードロップダウン */
+.list ul{
+  margin: 0;
+  margin-top: -8px;
+  padding: 0;
+}
+.list ul li{
+  list-style: none;
+  position: relative;
+  width: 110px;/*親メニューの幅*/
+  line-height: 40px;
+  color: #000000;;/*親メニューの文字色*/
+  text-align:center;
+}
+.list ul li a {
+  display: block;
+  text-decoration: none;
+}
+.list ul li:hover, .list ul li a:hover {
+  background: #000000;;/*ホバー時の親メニューの背景色*/
+  color:#fff;/*ホバー時の親メニューの文字色*/
+}
+.list ul li ul {
+  position: absolute;
+  top: 40px;/*親メニューの高さと同じにする*/
+  width: 100px;
+  z-index: 100;
+}
+.list ul li ul li {
+  visibility: hidden;
+  overflow: hidden;
+  width: 110px;/*サブメニューの幅*/
+  height: 0;
+  background: #757575;;/*サブメニューの背景色*/
+}
+.list ul li ul li:hover, .list ul li ul li a:hover {
+  background: #000000;;/*ホバー時のサブメニューの背景色*/
+}
+.list ul li:hover ul li, .list ul li a:hover ul li{
+  visibility: visible;
+  overflow: visible;
+  height:40px;/*サブメニューの高さ*/
+  z-index: 10;
+}
+/* ログインドロップダウン */
+.menu{
+  float: right;
+  margin-top: 0;
+}
+.menu ul{
+  margin: 0;
+  padding: 0;
+}
+.menu ul li{
+  list-style: none;
+  margin:0;
+  padding:0;
+  font-size:15px;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  position: relative;
+  width: 100px;/*親メニューの幅*/
+  height: 40px;/*親メニューの高さ*/
+  line-height: 40px;
+  background: #000000;;/*親メニューの背景色*/
+  color: #fff;/*親メニューの文字色*/
+  text-align:center;
+  font-weight:bold;
+}
+.menu ul li a {
+  color: #fff;
+  display: block;
+  text-decoration: none;
+}
+.menu ul li:hover, .menu ul li a:hover {
+  background: #000000;;/*ホバー時の親メニューの背景色*/
+  color:#fff;/*ホバー時の親メニューの文字色*/
+}
+.menu ul li ul {
+  position: absolute;
+  top: 40px;/*親メニューの高さと同じにする*/
+  width: 100px;
+  z-index: 100;
+}
+.menu ul li ul li {
+  visibility: hidden;
+  overflow: hidden;
+  width: 100px;/*サブメニューの幅*/
+  height: 0;
+  background: #757575;;/*サブメニューの背景色*/
+}
+.menu ul li ul li:hover, .menu ul li ul li a:hover {
+  background: #000000;;/*ホバー時のサブメニューの背景色*/
+}
+.menu ul li:hover ul li, .menu ul li a:hover ul li{
+  visibility: visible;
+  overflow: visible;
+  height:40px;/*サブメニューの高さ*/
+  z-index: 10;
+}
+
+/* メイン */
+.itemlist{
+  text-align: center;
+  margin-top: 5%;
+}
+.itemlist li a img{
+  width: 80%;
+}
+.itemlist li{
+  text-decoration: none;
+  display: inline-block;
+  width: 20%;
+  margin: 0;
+}
+.item h2{
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  font-size: 15pt;
+}
+.itemlist li{
+  list-style-type: none;
+}
+.itemlist a{
+  text-decoration: none;
+}
+.itemlist p{
+  font-family: "ヒラギノ明朝 ProN";
+}
+/* メインボーダー */
+.item{
+  text-align: center;
+}
+.text_border{
+  margin-top: 5%;
+  position: relative;
+  display: inline-block;
+  padding: 0 30%;
+  text-align: center;
+  }
+  .text_border:before,
+  .text_border:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  width: 30%;
+  height: 1px;
+  background-color: #000000;
+  }
+  .text_border:before {
+  left: 0;
+  }
+  .text_border:after {
+  right: 0;
+  }
+/* プロフィール */
+#profile{
+  text-align: center;
+  margin-top: 5%;
+}
+.profile_icon li{
+    text-decoration: none;
+    display: inline-block;
+    width: 20%;
+    margin-top: 5%;
+    font-size: 20px;
+  }
+.title h3{
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;  
+  font-size: 15pt;
+}
+.profile_icon li a img{
+  width: 70%;
+}
+.profile p{
+  text-decoration: none;
+  margin-top: 5%;
+  font-family: "ヒラギノ明朝 ProN";
+  font-size: 15px;
+}
+.profile a{
+  text-decoration: none;
+}
+
+/* プロフィールボーダー */
+#profile{
+  text-align: center;
+  border-bottom: 1px solid;
+  padding-bottom: 5%;
+}
+.title{
+  position: relative;
+  display: inline-block;
+  padding: 0 30%;
+  text-align: center;
+  }
+  .title:before,
+  .title:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  display: inline-block;
+  width: 30%;
+  height: 1px;
+  background-color: #000000;
+  }
+  .title:before {
+  left: 0;
+  }
+  .title:after {
+  right: 0;
+  }
+/* リンク */
+  .social_icons{
+    text-align: center;
+  }
+  .social_icons a{
+      color: black;
+      padding: 2%;
+  }
+  .link{
+    text-align: center;
+    margin-top: 2%;
+  }
+  .contact{
+    margin-top: 1%;
+  }
+  .contact a{
+    font-size: 15px;
+    font-family: "ヒラギノ明朝 ProN";
+    text-decoration: none;
+  }
+/************************************
+アバウト
+************************************/
+/* アバウト */
+.about{
+  margin-top: 10%;
+  text-align: center;
+}
+.about h1{
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+}
+.about p{
+  margin-top: 3%;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .20em;
+  line-height: 300%;
+  font-size: 14px;
+  border-bottom: 1px solid black;
+  width: 100%;
+  padding-bottom: 10%;
+}
+/************************************
+プロフィール
+************************************/
+/* プロフィール */
+#profile_pv{
+  margin-top: 2%;
+  text-align: center;
+  border-bottom: 1px solid black;
+  width: 100%;
+  padding-bottom: 5%;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+}
+#profile_pv h2{
+  margin-top: 1%;
+}
+.bd_text{
+  margin-top: 1%;
+  font-size: 12px;
+  letter-spacing: .20em;
+}
+.p_text{
+  margin-top: 2%;
+  letter-spacing: .20em;
+  line-height: 300%;
+  font-size: 12px;
+}
+.profile_pv img{
+  width: 15%;
+}
+.top_link{
+  margin-top: 5%;
+  font-size: 13px;
+}
+.top_link a{
+  text-decoration: none;
+}
+/************************************
+Tシャツ商品ページ
+************************************/
+/* メイン */
+#product{
+  margin-top: 10%; 
+  border-bottom: 1px solid;
+  padding-bottom: 5%;
+}
+.img{
+  width: 50%;
+}
+h2 img{
+  width: 80%;
+  margin-left: 20%;
+  border: 1px solid #757575;;
+}
+.product_menu{
+  width: 50%;
+  margin-right: -10%;
+  float: right;
+}
+.product_menu h3{
+  margin-top: 3%;
+}
+/* サイズ */
+.selectbox_size select{
+  width: 20%;
+  margin-top: 3%;
+}
+.selectbox_color select{
+  width: 20%;
+  margin-top: 3%;
+}
+/* カート */
+.buy_cart{
+  letter-spacing: .15em;
+  margin-top: 3%;
+  width: 50%;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #000000;/*背景色*/
+  border-bottom: solid 2px #757575;/*少し濃い目の色に*/
+  border-radius: 4px;/*角の丸み*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+.buy_cart:active{
+  border-bottom: solid 2px #000000;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+/* テキスト */
+.size_text{
+  margin-top: 5%;
+}
+.text{
+  margin-top: 10%;
+}
+/************************************
+iPhoneケース商品ページ
+************************************/
+/* メイン */
+#product{
+  margin-top: 10%; 
+  border-bottom: 1px solid;
+  padding-bottom: 10%;
+}
+.pc_img{
+  width: 50%;
+}
+h2 img{
+  width: 70%;
+  margin-left: 20%;
+  border: 1px solid #757575;;
+}
+.product_menu{
+  width: 50%;
+  margin-right: 0;
+  float: right;
+}
+.product_menu h3{
+  margin-top: 0;
+}
+/* サイズ */
+.selectbox_color select{
+  width: 20%;
+  margin-top: 3%;
+}
+/* カート */
+.buy_cart{
+  letter-spacing: .15em;
+  margin-top: 3%;
+  width: 50%;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #000000;/*背景色*/
+  border-bottom: solid 2px #757575;/*少し濃い目の色に*/
+  border-radius: 4px;/*角の丸み*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+.buy_cart:active{
+  border-bottom: solid 2px #000000;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+/* テキスト */
+.text{
+  margin-top: 10%;
+}
+/* フッター */
+  footer{
+    text-align: center;
+    color: black;
+    font-family: "ヒラギノ明朝 ProN";
+    font-size: 10px;
+    margin-top: 2%;
+  }
+/************************************
+メディアクエリ
+************************************/
+  /* 縮小時レイアウト */
+@media screen and (max-width:960px){
+  .navi_top{
+    display: none;
+  }
+  .list{
+    display: none;
+  }
+  #nav-drawer {
+    position: relative;
+  }
+ 
+  /* ハンバーガーメニュー */
+  /*チェックボックス等非表示*/
+  .nav-unshown {
+    display:none;
+  }
+  /*アイコンスペース*/
+  #nav-open {
+    display: inline-block;
+    padding: 5%;
+    margin-top: -170px;
+    width: 30px;
+    height: 22px;
+    vertical-align: middle;
+  }
+  /*ハンバーガーアイコン*/
+  #nav-open span, #nav-open span:before, #nav-open span:after {
+    position: absolute;
+    height: 3px;/*線の太さ*/
+    width: 30px;/*長さ*/
+    border-radius: 3px;
+    background: #000000;
+    display: block;
+    content: '';
+    cursor: pointer;
+  }
+  #nav-open span:before {
+    bottom: -10px;
+  }
+  #nav-open span:after {
+    bottom: -20px;
+  }
+  /*閉じる用の薄黒カバー*/
+  #nav-close {
+    display: none;/*はじめは隠しておく*/
+    position: fixed;
+    z-index: 99;
+    top: 0;/*全体に広がるように*/
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: 0;
+    transition: .3s ease-in-out;
+  }
+  /*中身*/
+  #nav-content {
+    text-align: center;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;/*最前面に*/
+    width: 90%;/*右側に隙間を作る（閉じるカバーを表示）*/
+    max-width: 330px;/*最大幅（調整してください）*/
+    height: 100%;
+    background: #e8e8e8;/*背景色*/
+    transition: .3s ease-in-out;/*滑らかに表示*/
+    -webkit-transform: translateX(-105%);
+    transform: translateX(-105%);/*左に隠しておく*/
+  }
+  .nav_inner li {
+    margin-top: 10%;
+    border-bottom: 1px solid #fff;
+    list-style: none;
+  }
+  .nav_inner li a{
+    display: block;
+    color: black;
+  font-family: "ヒラギノ明朝 ProN";
+  padding: 20px;
+  letter-spacing: .15em;
+  text-decoration: none;
+  }
+  .nav_inner ul li a{
+    font-size: 12px;
+    padding: 2%;
+  }
+  .small{
+    display: flex;
+    justify-content: space-around;
+
+  }
+  .small a{
+    margin-top: 30%;
+    padding: 5px;
+  }
+  /*チェックが入ったらもろもろ表示*/
+  #nav-input:checked ~ #nav-close {
+    display: block;/*カバーを表示*/
+    opacity: .5;
+  }
+  #nav-input:checked ~ #nav-content {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);/*中身を表示（右へスライド）*/
+    box-shadow: 6px 0 25px rgba(0,0,0,.15);
+  }
+  /* トップページ微調整 */
+  .itemlist li{
+    width: 30%;
+  }
+  .item{
+    margin-top: 10%;
+  }
+  .item h2{
+    font-size: 15px;
+  }
+  .title{
+    margin-top: 10%;
+  }
+  .title h3{
+    font-size: 15px;
+  }
+  .profile_icon p{
+    font-size: 10px;
+  }
+  .itemlist p{
+    font-size: 10px;
+    }
+  .link{
+    margin-top: 10%;
+  }
+  .contact{
+    margin-top: 3%;
+  }
+  .contact a{
+    font-size: 10px;
+  }
+  #form3{
+    margin-top: 10%;
+  }
+  #shopping_icon2{
+    position: relative;
+    float: right;
+    padding-right: 1%;
+    top: -95px;
+    font-size: 25px;
+  }
+  #shopping_icon2 a{
+    color: #000000;
+  }
+
+/************************************
+アバウト縮小時
+************************************/
+
+.about h1{
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .15em;
+  font-size: 20px;
+}
+.about p{
+  margin-top: 5%;
+  letter-spacing: .10em;
+  font-size: 8px;
+  padding-bottom: 30%;
+}
+/************************************
+プロフィール
+************************************/
+/* プロフィール */
+#profile_pv{
+  width: 100%;
+  padding-bottom: 15%;
+}
+#profile_pv h2{
+  margin-top: 5%;
+}
+.bd_text{
+  margin-top: 3%;
+  font-size: 8px;
+  letter-spacing: .20em;
+}
+.p_text{
+  margin-top: 5%;
+  letter-spacing: .10em;
+  line-height: 250%;
+  font-size: 8px;
+}
+.top_link{
+  margin-top: 5%;
+  font-size: 10px;
+}
+/************************************
+Tシャツ商品ページ
+************************************/
+/* メイン */
+
+#product{
+  margin-top: 10%; 
+  border-bottom: 1px solid;
+  padding-bottom: 20%;
+}
+.pc_img h2{
+  display: none;
+}
+.sp_img{
+  text-align: center;
+}
+h4 img{
+  width: 50%;
+  border: 1px solid #757575;
+}
+.product_menu{
+  width: 100%;
+  float: initial;
+  text-align: center;
+}
+.product_menu h3{
+  margin-top: 3%;
+  font-size: 15px;
+}
+/* サイズ */
+.selectbox_size select{
+  width: 20%;
+  margin-top: 3%;
+}
+.selectbox_color select{
+  width: 20%;
+  margin-top: 3%;
+}
+/* カート */
+.buy_cart{
+  letter-spacing: .15em;
+  font-size: 10px;
+  margin-top: 3%;
+  width: 50%;
+  text-align: center;
+  position: static;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #000000;/*背景色*/
+  border-bottom: solid 2px #757575;/*少し濃い目の色に*/
+  border-radius: 4px;/*角の丸み*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+.buy_cart:active{
+  border-bottom: solid 2px #000000;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+/* テキスト */
+.size_text{
+  margin-top: 5%;
+  font-size: 12px;
+  text-align: center;
+}
+.text{
+  margin-top: 10%;
+  font-size: 12px;
+}
+  
+}
+@media screen and (min-width:960px){
+  #nav-drawer{
+    display: none;
+  }
+  #shopping_icon2{
+    display: none;
+  }
+  .sp_img h4{
+    display: none;
+  }
+}
+  
+ 
+
+

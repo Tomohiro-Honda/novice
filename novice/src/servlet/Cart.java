@@ -52,12 +52,12 @@ public class Cart extends HttpServlet {
 			//ログインしていない場合はログインを促す（ログイン前のカート機能は今後実装）
 			if(loginCustomer == null) {
 				message = "カートを見るにはログインしてください。";
-				rd = request.getRequestDispatcher("/Login?action=login");
+				rd = request.getRequestDispatcher("Login?action=login");
 			}else {
 				//ログインしている場合の処理
 				CartViewLogic cartViewLogic = new CartViewLogic();
-				String customerMail = loginCustomer.getMail();
-				cartItems = cartViewLogic.viewCart(customerMail);
+				int customerId = loginCustomer.getId();
+				cartItems = cartViewLogic.viewCart(customerId);
 				request.setAttribute("cartItems", cartItems);
 				rd = request.getRequestDispatcher("/WEB-INF/jsp/cartView.jsp");
 				message = (String)session.getAttribute("updateMessage");
@@ -84,31 +84,60 @@ public class Cart extends HttpServlet {
 
 			//更新による二重リクエスト防止
 			if(session.getAttribute("lookItem") == null) {
-				rd = request.getRequestDispatcher("index.jsp");
-//				rd.forward(request, response);
+				rd = request.getRequestDispatcher("/index.jsp");
+				rd.forward(request, response);
 				} else {
 
 			//ログインしてない場合
 			if (loginCustomer==null){
 				request.setAttribute("message", "ログインしてください");
-				rd = request.getRequestDispatcher("index.jsp");//ログインページに直す
+				response.sendRedirect("Login?action=login");//ログインページに直す
 			}
 			//ログイン確認できた場合
 			else{
-				String customerMail = loginCustomer.getMail();
+				int customerId = loginCustomer.getId();
 				String productCode = request.getParameter("productCode");
-				String productName = request.getParameter("productName");
-				int price = Integer.parseInt(request.getParameter("price"));
+				String size = request.getParameter("size");
+				String type = request.getParameter("type");
+				String indivCode = null;
+				if(size!=null) {
+					type = type.toUpperCase();
+					type = String.valueOf(type.charAt(0));
+					indivCode = productCode +("-")+ size +("-")+ type;
+				} else {
+					type = type.toUpperCase();
+					type = String.valueOf(type.charAt(0));
+					indivCode = productCode + ("-") + type;
+				}
 				int quantity = Integer.parseInt(request.getParameter("quantity"));
-				int stock = Integer.parseInt(request.getParameter("stock"));
 
+				int stock = 0;
+				if(size!=null) { //Tシャツが選ばれている場合は値が上書きされる
+					switch(size) {
+					case "S":
+						int sStock = Integer.parseInt(request.getParameter("sStock"));
+						stock = sStock;
+						break;
+					case "M":
+						int mStock = Integer.parseInt(request.getParameter("mStock"));
+						stock = mStock;
+						break;
+					case "L":
+						int lStock = Integer.parseInt(request.getParameter("lStock"));
+						stock = lStock;
+						break;
+					}
+				}else {
+					int scStock = Integer.parseInt(request.getParameter("scStock"));
+					stock = scStock; // スマホケースの値を入れる
+				}
 				//カートに同じ商品がないかチェック。
 				CartCheckLogic cartCheckLogic = new CartCheckLogic();
-				int quantityInCart = cartCheckLogic.addCart(customerMail, productCode);
+				int quantityInCart = cartCheckLogic.addCart(customerId, indivCode);
 					//カートに同じ商品が無い場合
 					if(quantityInCart == 0) {
 						AddCartLogic addCartLogic = new AddCartLogic();
-						addCartLogic.addCart(customerMail, productCode, quantity);
+						addCartLogic.addCart(customerId, productCode, indivCode, size, type, quantity);
 						rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
 						session.removeAttribute("lookItem");//二重リクエスト防止用のオブジェクトを削除
 					}
@@ -116,19 +145,19 @@ public class Cart extends HttpServlet {
 					else if(quantityInCart!=0 && quantityInCart + quantity <= stock){
 						AddCartLogic addCartLogic = new AddCartLogic();
 						quantity += quantityInCart; //数量の値を更新
-						addCartLogic.addCartPlus(customerMail, productCode, quantity);
+						addCartLogic.addCartPlus(customerId, indivCode, quantity);
 						rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
 						session.removeAttribute("lookItem");
 					}else if (quantityInCart!=0 && quantityInCart + quantity > stock ){
 						//カートに同じ商品があるが、カートに入れた個数の合計が在庫数をオーバーする場合
 						request.setAttribute("message", "カートに入れられる量をオーバーしています");
-						Product viewedProduct = new Product(productCode, productName, price, stock);
+						Product viewedProduct = (Product)request.getAttribute("selectedProduct");
 						request.setAttribute("selectedProduct", viewedProduct);
 						rd = request.getRequestDispatcher("/WEB-INF/jsp/productInfo.jsp");
 					}
-//					rd.forward(request, response);
+					rd.forward(request, response);
 			}
-			}rd.forward(request, response);
+			}
 		}
 
 		/**----------------------カートの商品の個数を変更----------------------**/
@@ -140,7 +169,7 @@ public class Cart extends HttpServlet {
 			//ログインしてない場合
 			if (loginCustomer==null){
 				request.setAttribute("message", "ログインしてください");
-				rd = request.getRequestDispatcher("index.jsp");
+				rd = request.getRequestDispatcher("/index.jsp");
 				rd.forward(request, response);
 			}
 			//ログイン確認できた場合
@@ -149,21 +178,21 @@ public class Cart extends HttpServlet {
 
 			List<String> codeList = new ArrayList<String>();
 			List<Integer> quantityList = new ArrayList<Integer>();
-			String customerMail = loginCustomer.getMail();
+			int id = loginCustomer.getId();
 
 			//商品コードと数量の値をそれぞれ項目ごとにリストに入れる。
 			for(int i =1; i != numOfCodes; i++ ) {
-				String productCode =(String)request.getParameter("productCode" + i);
+				String individualCode =(String)request.getParameter("individualCode" + i);
 				Integer quantity = Integer.parseInt((String)request.getParameter("quantity" + i));
-				codeList.add(productCode);
+				codeList.add(individualCode);
 				quantityList.add(quantity);
 			}
 			//リストを渡して商品の個数を変更（変更していないものも全て更新される）
 			CartUpdateLogic cartUpdateLogic = new CartUpdateLogic();
-			cartUpdateLogic.quantityUpdate(customerMail, codeList, quantityList);
+			cartUpdateLogic.quantityUpdate(id, codeList, quantityList);
 			String message = "個数を変更しました";
 			session.setAttribute("updateMessage", message);
-			response.sendRedirect("./Cart?action=view_cart");
+			response.sendRedirect("Cart?action=view_cart");
 			}
 		}
 
@@ -181,29 +210,28 @@ public class Cart extends HttpServlet {
 			//ログイン確認できた場合
 			else {
 				int numOfItems = Integer.parseInt((String)request.getParameter("numOfItems"));//カートに商品が何種類あるか
-				String productCode = null;
+				String individualCode = null;
 				String deleteCheck = null;
-				String customerMail = loginCustomer.getMail();
+				int customerId = loginCustomer.getId();
 				List<String> delcodes = new ArrayList<String>(); //削除する商品を入れるためのリスト チェックボックス入れた商品
+				System.out.println(delcodes.size());//サイズ確認テスト
 
 				for(int i =1; i <= numOfItems; i++ ) {
-						productCode =(String)request.getParameter("productCode" + i);
+						individualCode =(String)request.getParameter("individualCode" + i);
 						deleteCheck = (String)request.getParameter("check" +i);
 						if(deleteCheck != null) {
-							delcodes.add(productCode);
+							delcodes.add(individualCode);
 						}
 				}
 				if(delcodes.isEmpty()) {//どのチェックボックスもnullの場合
-					rd = request.getRequestDispatcher("/Cart?action=view_cart");
+					response.sendRedirect("Cart?action=view_cart");
 					}else {
 					DeleteItemLogic deleteItemLogic = new DeleteItemLogic();
-					deleteItemLogic.delete(customerMail, delcodes);
+					deleteItemLogic.delete(customerId, delcodes);
 					String message = "選択した商品を削除しました";
 					session.setAttribute("updateMessage", message);
-					rd = request.getRequestDispatcher("/Cart?action=view_cart");
-					System.out.println(message);
+					response.sendRedirect("Cart?action=view_cart");
 					}
-				rd.forward(request, response);
 				}
 
 		}

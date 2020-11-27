@@ -3,6 +3,7 @@ package model.beans;
 import java.io.Serializable;
 
 public class Customer implements Serializable{
+	private  int id; //ユーザー固有ID
 	private String lastName; //ユーザー名（姓）
 	private String firstName; //ユーザー名（名）
 	private String mail; //メアド
@@ -32,6 +33,7 @@ public class Customer implements Serializable{
 
 
 	//getter
+	public int getId() {return id;}
 	public String getLastName() {return lastName;}
 	public String getFirstName() {return firstName;}
 	public String getMail() {return mail;}
@@ -43,6 +45,9 @@ public class Customer implements Serializable{
 	public String getTell() {return tell;}
 
 	//setter
+	public void setId(int id) {
+		this.id = id;
+	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}

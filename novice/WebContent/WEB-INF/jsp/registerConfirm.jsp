@@ -15,7 +15,8 @@ String passLength ="●";
 	integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
 	integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-	<link rel="stylesheet" type="text/css" href="/example4/css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+	<link rel="icon" type="image/png" href="../favicon.png" sizes="16x16 24x24 32x32 48x48 64x64" />
 </head>
 
 <body>
@@ -112,10 +113,10 @@ String passLength ="●";
 
 		<div class="row justify-content-sm-center form_list">
 			<div class="col-sm-auto register_return">
-				<a href="/novice/RegisterUser" class="btn btn-outline-dark">戻る</a>
+				<a href="javascript:history.back()" class="btn btn-outline-dark">戻る</a>
 			</div>
 			<div class="col-sm-auto　register_ok">
-				<a href="/novice/RegisterUser?action=done" class="btn btn-dark">登録</a>
+				<a href="../RegisterUser?action=done" class="btn btn-dark">登録</a>
 			</div>
 		</div>
 

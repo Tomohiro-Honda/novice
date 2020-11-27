@@ -1,0 +1,109 @@
+/* ヘッダー */
+body{
+  margin-top: 0;
+}
+.header_box{
+  text-align: center;
+}
+h1 img{
+  width: 10%;
+}
+.title h2{
+  margin-top: 5%;
+  font-size: 40px;
+  font-family: "ヒラギノ明朝 ProN";
+  letter-spacing: .10em;
+}
+#text_box p{
+  text-align: center;
+}
+.email_box {
+  width: 30%;
+  text-align: center;
+  margin-left: 35%;
+  margin-top: 5%;
+}
+.email_box input[type='text'] {
+	font: 13px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	letter-spacing: 1px;
+	color: #000000;
+	border: 1px solid #1b2538;
+	border-radius: 4px;
+}
+.password_box{
+  width: 30%;
+  text-align: center;
+  margin-left: 35%;
+  margin-top: 2%;
+}
+.password_box input[type='text'] {
+	font: 13px/24px sans-serif;
+	box-sizing: border-box;
+	width: 100%;
+	letter-spacing: 1px;
+	color: #000000;
+	border: 1px solid #1b2538;
+	border-radius: 4px;
+}
+
+/* ログインボックス */
+.login{
+  letter-spacing: .15em;
+  margin-top: 3%;
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #FFF;
+  background: #aaaaaa;
+  border-bottom: solid 2px #757575;/*少し濃い目の色に*/
+  border-radius: 4px;/*角の丸み*/
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19);
+  font-weight: bold;
+}
+.login:active{
+  border-bottom: solid 2px #000000;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.30);
+}
+.login_box{
+  width: 100%;
+  margin-top: 3%;
+  text-align: center;
+}
+.login_box a{
+  text-decoration: none;
+}
+/* リンク */
+.social_icons{
+  text-align: center;
+}
+.social_icons a{
+    color: black;
+    padding: 2%;
+}
+.link{
+  text-align: center;
+  margin-top: 10%;
+  clear: left;
+  border-top: 1px solid;
+  padding-top: 5%;
+}
+.contact{
+  margin-top: 2%;
+}
+.contact a{
+  font-size: 15px;
+  font-family: "ヒラギノ明朝 ProN";
+  text-decoration: none;
+}
+/* フッター */
+footer{
+  text-align: center;
+  color: black;
+  font-family: "ヒラギノ明朝 ProN";
+  font-size: 10px;
+  margin-top: 2%;
+}

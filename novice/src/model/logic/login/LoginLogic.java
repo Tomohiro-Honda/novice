@@ -22,6 +22,7 @@ public class LoginLogic {
 				// 検索結果が存在する場合loginCustomerに値をセット（結果が1件しか返らないことを想定）
 				loginCustomer = new Customer();
 
+				loginCustomer.setId(rs.getInt("ID"));
 				loginCustomer.setLastName(rs.getString("LASTNAME"));
 				loginCustomer.setFirstName(rs.getString("FIRSTNAME"));
 				loginCustomer.setMail(rs.getString("MAIL"));

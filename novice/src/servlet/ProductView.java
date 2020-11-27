@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -46,17 +48,37 @@ public class ProductView extends HttpServlet {
 			RequestDispatcher rd ;
 			String productCode = request.getParameter("productCode");
 			ProductInfoLogic logic = new ProductInfoLogic();
+			List<Integer> stockList = new ArrayList<Integer>();
 
 			//viewProductInfoメソッドを使ってProductインスタンスを作成
-			Product selectedProduct = logic.viewProductInfo(productCode);
-
+			Product selectedProduct = logic.getProductInfo(productCode);
 			if(selectedProduct != null) {
-
 				//商品情報をセット
 				String lookItem = "Im looking items...";  //更新時に二重登録を防止するためのオブジェクト
 				session.setAttribute("lookItem", lookItem); //カートに入れる時にこのセッションの有無を確認。カートに入れた時にremove
+
+				//製作者の名前を取得
+				String producedBy = selectedProduct.getProductCode();
+				String producer = null; //製作者
+				if(producedBy.contains("H")) {
+					producer = "本田知大";
+				}else if(producedBy.contains("N")) {
+					producer = "中村祥之";
+				}else {
+					producer = "瀬川敢太";
+				}
+
+				stockList = logic.getStockList(productCode);
 				request.setAttribute("selectedProduct", selectedProduct);
+				request.setAttribute("producer", producer);
+				request.setAttribute("stockList", stockList);
+
+				//Tシャツかスマホケースでリンク先が違う
+				if(productCode.contains("TS")) {
 				rd = request.getRequestDispatcher("/WEB-INF/jsp/productInfo.jsp");
+				}else {
+					rd = request.getRequestDispatcher("/WEB-INF/jsp/productInfoSC.jsp");
+				}
 			}
 			else {
 					//商品情報が存在しない場合

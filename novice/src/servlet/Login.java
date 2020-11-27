@@ -45,7 +45,7 @@ public class Login extends HttpServlet {
 		if(action .equals("logout")) {
 			session.removeAttribute("login_db");
 			session.removeAttribute("login_customer");
-			response.sendRedirect("/novice/index.jsp");
+			response.sendRedirect("/index.jsp");
 		}
 	}
 

@@ -1,0 +1,345 @@
+
+.header {
+  font-size: 15px;
+  vertical-align: baseline;
+  text-align: center;
+  margin-bottom: 30px;
+  padding-top: 30px;
+  font-style: bold;
+}
+
+h1{
+  padding-top: 20px;
+  font-style: bold;
+}
+
+h2 { 
+  text-align: left;
+  margin-bottom: 0;
+  padding-top: 30px;
+  font-size: 20px;
+}
+
+.order_form_message {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.order_form_content{
+  vertical-align: baseline;
+  text-align: center;
+}
+
+.title {  
+  position: relative;
+  padding: 0 0 30px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.form_list_name{
+  margin: 20px 0 20px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.form_list_title{  
+  font-size: 16px;
+	letter-spacing: 0.4px;
+	color: rgb(51, 51, 51);
+	font-weight: bold;
+  display:block;
+  text-align: left;  
+  padding: 10px 0 20px 50px;
+}
+
+.form_class_input {
+  font-size: 16px;
+	letter-spacing: 0.4px;
+	color: rgb(51, 51, 51);
+	font-weight: bold;
+  display:block;
+  text-align: left;
+  padding: 10px 20px 20px 30px;
+  margin-right: 0px;
+
+}
+
+.checkbox{
+  margin: 50px 0 60px 0;
+}
+.btn{
+  font-size: 15px;
+}
+
+.form_list {
+	border-top-color: rgb(238, 238, 238);
+	border-top-style: solid;
+	border-top-width: 1px;
+	padding: 20px;
+	margin: 0 ;
+}
+.input_title {
+	font-size: 16px;
+	letter-spacing: 0.4px;
+	color: rgb(51, 51, 51);
+	font-weight: bold;
+	display: inline-block;
+	margin-right: 50px;
+	padding-top: 3px;
+	padding-right: 0px;
+
+	}
+.form_list_input {
+	display: block;
+}
+
+.input_adress{
+	width: 500px;
+}
+
+.form_input {
+	width: 300px;
+}
+
+label {
+	margin: 0 8px 0 15px;
+}
+
+.register_return {
+	margin-right: 30px;
+}
+
+.alert_message {
+	color: rgb(230,10,50);
+}
+
+.button_box{
+  text-align: center;
+}
+
+/************** お支払い方法 orderPayment *************/
+
+.orderform_title_payment{
+  margin: 50px 0 15px 60px;
+}
+.payment_check{
+  list-style: none;
+}
+.payment_list{
+  height: 50px;
+  padding-top: 10px;
+  padding-left: 30px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+.payment_select{
+  margin-right: 10px;
+}
+.btn_box_payment{
+  text-align: center;
+  margin-top: 30px;
+}
+
+/******************** 注文確定　orderConfirm ***************/
+
+.orderform_title{
+  margin-bottom: 10px;
+
+}
+.cart_items_title{
+  list-style: none;
+  margin: 20px 0 20px 0;
+  padding: 10px 0 10px 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  font-size: 12px;
+}
+
+.order_item_list{
+  border-bottom: 1px solid #eee;
+}
+
+.item_name_bar{
+  padding-left: 30px;
+}
+
+.cart_item_list{
+  font-size: 12px;
+  padding-left: 0;
+  list-style: none;
+}
+
+.item_bar{
+  padding-left:20px;
+}
+
+.item_name_bar{
+  padding-left:50px;
+}
+
+.item_image{
+	width: 100px;
+	height: 100px;
+}
+
+.item_thumbnail{
+  position: absolute;
+}
+
+.item_info{  
+  padding-left: 25px;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.item_name_field{  
+  padding-left:10px;
+}
+
+.order_values{
+  font-size: 10px;
+}
+
+.total{
+  font-size: 12px;
+  font-style: bold;
+}
+.total_value{
+  padding-left: 10px;
+  font-size: 12px;
+  font-style: bold;
+}
+.shipping_value,.cod_value,.tax_value{
+  padding-left: 10px;
+}
+
+.order_list_name{
+  height: 50px;
+  margin: 0;
+  padding-top: 15px;
+  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
+  font-size: 12px;
+}
+
+.order_list_title{
+  font-size:12px;
+  width: 50%;
+}
+.order_class_input{
+  font-size:12px;
+  text-align: left;  
+}
+.order_button{
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+
+/**************** マイーページ ***************/
+
+.title_header_mypage{
+  margin-bottom: 15px;
+}
+.account_info_title{
+  margin-top: 15px;
+  padding-left: 10px;
+}
+.account_info_text{
+  margin-top: 3px;
+  text-align: right;
+}
+.logout_box{
+  text-align: right;
+  height: 10px;
+  padding-top: 20px;
+}
+
+
+.form_title_passchange{
+  border-bottom: 1px solid #eee;
+}
+
+.title_header_passchange { 
+  text-align: left;
+  margin-bottom: 10px;
+  padding-top: 30px;
+  font-size: 20px;
+}
+.form_contents_list{
+  list-style: none;
+  padding-left: 0;
+}
+.pass_change_input{
+  margin-top: 15px;
+}
+
+.form_oldpass_label{
+  margin-top: 15px;
+}
+.form_newpass_label{
+  margin-top:35px;
+}
+
+/******************アカウント情報 *******************/
+
+.title_header_accountinfo{
+  border-bottom: 1px solid #eee;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.form_list_account{
+  margin: 20px 0 20px 0;
+  border-bottom: 1px solid #eee;
+}
+.form_list_title{  
+  font-size: 16px;
+	letter-spacing: 0.4px;
+	color: rgb(51, 51, 51);
+	font-weight: bold;
+  display:block;
+  text-align: left;  
+  padding: 10px 0 20px 50px;
+}
+.mypage_link{
+  margin-right: 50px;
+}
+.button_box_pagelink{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/*************** メールアドレス変更 *******************/
+
+.title_mail{
+  border-bottom: 1px solid #eee;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+.form_label_mail{
+  margin-top: 8px;
+}
+
+.form_list_label_mail{
+  font-size: 10px;
+  background-color: #eee;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+.change_mail_text{
+  margin-top: 10px;
+  margin-bottom:0;
+  font-size: 10px;
+}
+.form_input_mail{
+  margin-left: 30px;
+}
+.form_class_input_mail {
+  font-size: 16px;
+	letter-spacing: 0.4px;
+	color: rgb(51, 51, 51);
+	font-weight: bold;
+  display:block;
+  text-align: center;
+  padding: 10px 20px 30px 30px;
+  margin-right: 0px;
+  margin-left: 40px;
+}
