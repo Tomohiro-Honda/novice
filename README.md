@@ -3,8 +3,7 @@
 
 <label>ECサイトURL：</label>
 <a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>
-<font size="1">注）サイトで注文しても実際に商品が届いたり請求が来ることはありません。</font>
-<br>
+<p>注）サイトで注文しても実際に商品が届いたり請求が来ることはありません。</p>
 <p>【ログインに使用できるデモアカウント】<br>
 メールアドレス：novice6699@gmail.com<br>
 パスワード：test123</p>
