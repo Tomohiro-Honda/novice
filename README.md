@@ -4,7 +4,7 @@
 <label>ECサイトURL：</label>
 <a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>
 <br>
-<p>【ログインに使用可能なデモアカウント】<br>
+<p>【ログインに使用できるデモアカウント】<br>
 メールアドレス：novice6699@gmail.com<br>
 パスワード：test123</p>
 <br>
