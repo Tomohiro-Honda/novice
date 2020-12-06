@@ -13,7 +13,7 @@ h1{
   font-style: bold;
 }
 
-h2 { 
+h2 {
   text-align: left;
   margin-bottom: 0;
   padding-top: 30px;
@@ -30,7 +30,7 @@ h2 {
   text-align: center;
 }
 
-.title {  
+.title {
   position: relative;
   padding: 0 0 30px 10px;
   border-bottom: 1px solid #eee;
@@ -41,13 +41,13 @@ h2 {
   border-bottom: 1px solid #eee;
 }
 
-.form_list_title{  
+.form_list_title{
   font-size: 16px;
 	letter-spacing: 0.4px;
 	color: rgb(51, 51, 51);
 	font-weight: bold;
   display:block;
-  text-align: left;  
+  text-align: left;
   padding: 10px 0 20px 50px;
 }
 
@@ -185,13 +185,13 @@ label {
   position: absolute;
 }
 
-.item_info{  
+.item_info{
   padding-left: 25px;
   padding-top: 30px;
   text-align: center;
 }
 
-.item_name_field{  
+.item_name_field{
   padding-left:10px;
 }
 
@@ -227,7 +227,7 @@ label {
 }
 .order_class_input{
   font-size:12px;
-  text-align: left;  
+  text-align: left;
 }
 .order_button{
   margin-top: 50px;
@@ -258,7 +258,7 @@ label {
   border-bottom: 1px solid #eee;
 }
 
-.title_header_passchange { 
+.title_header_passchange {
   text-align: left;
   margin-bottom: 10px;
   padding-top: 30px;
@@ -290,13 +290,13 @@ label {
   margin: 20px 0 20px 0;
   border-bottom: 1px solid #eee;
 }
-.form_list_title{  
+.form_list_title{
   font-size: 16px;
 	letter-spacing: 0.4px;
 	color: rgb(51, 51, 51);
 	font-weight: bold;
   display:block;
-  text-align: left;  
+  text-align: left;
   padding: 10px 0 20px 50px;
 }
 .mypage_link{
@@ -342,4 +342,18 @@ label {
   padding: 10px 20px 30px 30px;
   margin-right: 0px;
   margin-left: 40px;
+}
+
+/******************** ゲスト用入力フォーム ********************/
+.title_guest {
+  position: relative;
+  padding: 0 0 20px 10px;
+  padding-top: 10px;
+}
+.sample_button_box{
+  margin-top: 20px;
+  padding-top: 10px;
+}
+.button_box{
+  margin: 30px 0 50px 0;
 }

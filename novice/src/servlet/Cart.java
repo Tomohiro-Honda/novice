@@ -48,26 +48,29 @@ public class Cart extends HttpServlet {
 			List<CartItem> cartItems = null;
 			RequestDispatcher rd = null;
 			String message ;
+			CartViewLogic cartViewLogic = new CartViewLogic();
 
-			//ログインしていない場合はログインを促す（ログイン前のカート機能は今後実装）
+			//ログインしていない場合はゲスト用カートを見る
 			if(loginCustomer == null) {
-				message = "カートを見るにはログインしてください。";
-				rd = request.getRequestDispatcher("Login?action=login");
+				List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+				if(guestCartItems==null || guestCartItems.isEmpty()){
+					cartItems = new ArrayList<CartItem>();
+				}else {
+				cartItems = cartViewLogic.viewCart(guestCartItems);
+				}
+				session.setAttribute("cartItems", cartItems);
 			}else {
 				//ログインしている場合の処理
-				CartViewLogic cartViewLogic = new CartViewLogic();
 				int customerId = loginCustomer.getId();
 				cartItems = cartViewLogic.viewCart(customerId);
-				request.setAttribute("cartItems", cartItems);
-				rd = request.getRequestDispatcher("/WEB-INF/jsp/cartView.jsp");
-				message = (String)session.getAttribute("updateMessage");
-				request.setAttribute("message", message);
-				session.removeAttribute("updateMessage");
+				session.setAttribute("cartItems", cartItems);
 			}
+			rd = request.getRequestDispatcher("/WEB-INF/jsp/cartView.jsp");
+			message = (String)session.getAttribute("updateMessage");
+			request.setAttribute("message", message);
+			session.removeAttribute("updateMessage");
 			rd.forward(request, response);
 			}
-
-
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -88,62 +91,78 @@ public class Cart extends HttpServlet {
 				rd.forward(request, response);
 				} else {
 
-			//ログインしてない場合
-			if (loginCustomer==null){
-				request.setAttribute("message", "ログインしてください");
-				response.sendRedirect("Login?action=login");//ログインページに直す
-			}
-			//ログイン確認できた場合
-			else{
-				int customerId = loginCustomer.getId();
-				String productCode = request.getParameter("productCode");
-				String size = request.getParameter("size");
-				String type = request.getParameter("type");
-				String indivCode = null;
-				if(size!=null) {
-					type = type.toUpperCase();
-					type = String.valueOf(type.charAt(0));
-					indivCode = productCode +("-")+ size +("-")+ type;
-				} else {
-					type = type.toUpperCase();
-					type = String.valueOf(type.charAt(0));
-					indivCode = productCode + ("-") + type;
-				}
-				int quantity = Integer.parseInt(request.getParameter("quantity"));
+					AddCartLogic addCartLogic = new AddCartLogic();
+					CartCheckLogic cartCheckLogic = new CartCheckLogic();
 
-				int stock = 0;
-				if(size!=null) { //Tシャツが選ばれている場合は値が上書きされる
-					switch(size) {
-					case "S":
-						int sStock = Integer.parseInt(request.getParameter("sStock"));
-						stock = sStock;
-						break;
-					case "M":
-						int mStock = Integer.parseInt(request.getParameter("mStock"));
-						stock = mStock;
-						break;
-					case "L":
-						int lStock = Integer.parseInt(request.getParameter("lStock"));
-						stock = lStock;
-						break;
+					String productCode = request.getParameter("productCode");
+					String size = request.getParameter("size");
+					String type = request.getParameter("type");
+					String indivCode = addCartLogic.generateIndivCode(productCode, size, type);
+					int quantity = Integer.parseInt(request.getParameter("quantity"));
+					int sStock = 0;
+					int mStock = 0;
+					int lStock = 0;
+					int scStock = 0;
+					if(size!=null) {
+					sStock = Integer.parseInt(request.getParameter("sStock"));
+					mStock = Integer.parseInt(request.getParameter("mStock"));
+					lStock = Integer.parseInt(request.getParameter("lStock"));
+					}else {
+					scStock = Integer.parseInt(request.getParameter("scStock"));
 					}
-				}else {
-					int scStock = Integer.parseInt(request.getParameter("scStock"));
-					stock = scStock; // スマホケースの値を入れる
-				}
+					int stock = addCartLogic.selectStockValue(size, sStock, mStock, lStock, scStock);
+
+					//ログインしてない場合はゲストカートを使う
+					if (loginCustomer==null){
+						List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+
+						//ゲスト用カートを初めて使うかカートが空の場合、もしくはセッション切れの場合
+						if(guestCartItems == null || guestCartItems.isEmpty()) {
+							guestCartItems = new ArrayList<CartItem>();
+							guestCartItems =  addCartLogic.addCart(guestCartItems, indivCode, quantity);
+							session.setAttribute("guestCartItems", guestCartItems);//カート情報を更新
+							session.removeAttribute("lookItem");//二重リクエスト防止用のオブジェクトを削除
+							rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
+						}else { //ゲスト用カートのインスタンスがある場合
+							//カートに同じ商品がないかチェック。
+							int quantityInCart = cartCheckLogic.addCart(guestCartItems, indivCode);
+								//カートに同じ商品が無い場合
+								if(quantityInCart == 0) {
+									guestCartItems = addCartLogic.addCart(guestCartItems, indivCode, quantity);
+									session.setAttribute("guestCartItems", guestCartItems);//カート情報を更新
+									session.removeAttribute("lookItem");//二重リクエスト防止用のオブジェクトを削除
+									rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
+								}
+								//カートに同じ商品があり、カートに入れた個数の合計が在庫数をオーバーしない場合
+								else if(quantityInCart!=0 && quantityInCart + quantity <= stock){
+									quantity += quantityInCart; //数量の値を更新
+									guestCartItems = addCartLogic.guestAddCartPlus(guestCartItems, indivCode, quantity);
+									session.setAttribute("guestCartItems", guestCartItems);//カート情報を更新
+									session.removeAttribute("lookItem");
+									rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
+								}else if (quantityInCart!=0 && quantityInCart + quantity > stock ){
+									//カートに同じ商品があるが、カートに入れた個数の合計が在庫数をオーバーする場合
+									request.setAttribute("message", "カートに入れられる量をオーバーしています");
+									Product viewedProduct = (Product)request.getAttribute("selectedProduct");
+									request.setAttribute("selectedProduct", viewedProduct);
+									rd = request.getRequestDispatcher("/WEB-INF/jsp/productInfo.jsp");
+								}
+						}
+						rd.forward(request, response);
+					}
+					//	ログイン確認できた場合
+					else{
+						int customerId = loginCustomer.getId();
 				//カートに同じ商品がないかチェック。
-				CartCheckLogic cartCheckLogic = new CartCheckLogic();
 				int quantityInCart = cartCheckLogic.addCart(customerId, indivCode);
 					//カートに同じ商品が無い場合
 					if(quantityInCart == 0) {
-						AddCartLogic addCartLogic = new AddCartLogic();
 						addCartLogic.addCart(customerId, productCode, indivCode, size, type, quantity);
 						rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
 						session.removeAttribute("lookItem");//二重リクエスト防止用のオブジェクトを削除
 					}
 					//カートに同じ商品があり、カートに入れた個数の合計が在庫数をオーバーしない場合
 					else if(quantityInCart!=0 && quantityInCart + quantity <= stock){
-						AddCartLogic addCartLogic = new AddCartLogic();
 						quantity += quantityInCart; //数量の値を更新
 						addCartLogic.addCartPlus(customerId, indivCode, quantity);
 						rd = request.getRequestDispatcher("/WEB-INF/jsp/itemAdded.jsp");
@@ -166,19 +185,9 @@ public class Cart extends HttpServlet {
 			Customer loginCustomer = (Customer)session.getAttribute("login_customer");
 			RequestDispatcher rd = null;
 
-			//ログインしてない場合
-			if (loginCustomer==null){
-				request.setAttribute("message", "ログインしてください");
-				rd = request.getRequestDispatcher("/index.jsp");
-				rd.forward(request, response);
-			}
-			//ログイン確認できた場合
-			else {
 			int numOfCodes = Integer.parseInt((String)request.getParameter("numOfCodes"));//変更する商品がいくつあるか。
-
 			List<String> codeList = new ArrayList<String>();
 			List<Integer> quantityList = new ArrayList<Integer>();
-			int id = loginCustomer.getId();
 
 			//商品コードと数量の値をそれぞれ項目ごとにリストに入れる。
 			for(int i =1; i != numOfCodes; i++ ) {
@@ -187,8 +196,22 @@ public class Cart extends HttpServlet {
 				codeList.add(individualCode);
 				quantityList.add(quantity);
 			}
-			//リストを渡して商品の個数を変更（変更していないものも全て更新される）
 			CartUpdateLogic cartUpdateLogic = new CartUpdateLogic();
+
+			//ログインしてない場合
+			if (loginCustomer==null){
+				List<CartItem> cartItems = (List<CartItem>)session.getAttribute("cartItems");
+				if(cartItems==null) {//セッションタイムアウトの場合
+					rd = request.getRequestDispatcher("index.jsp");
+					rd.forward(request, response);
+				}else {
+					List<CartItem>guestCartItems = cartUpdateLogic.quantityUpdate(codeList, quantityList); //カートの個数を変更
+					session.setAttribute("guestCartItems", guestCartItems);
+					response.sendRedirect("Cart?action=view_cart");
+				}
+			}else {//ログイン確認できた場合
+			//リストを渡して商品の個数を変更（変更していないものも全て更新される）
+				int id = loginCustomer.getId();
 			cartUpdateLogic.quantityUpdate(id, codeList, quantityList);
 			String message = "個数を変更しました";
 			session.setAttribute("updateMessage", message);
@@ -201,47 +224,44 @@ public class Cart extends HttpServlet {
 			Customer loginCustomer = (Customer)session.getAttribute("login_customer");
 			RequestDispatcher rd = null;
 
-			//ログインしてない場合
-			if (loginCustomer==null){
-				request.setAttribute("message", "ログインしてください");
-				rd = request.getRequestDispatcher("index.jsp");
-				rd.forward(request, response);
-			}
-			//ログイン確認できた場合
-			else {
-				int numOfItems = Integer.parseInt((String)request.getParameter("numOfItems"));//カートに商品が何種類あるか
-				String individualCode = null;
-				String deleteCheck = null;
-				int customerId = loginCustomer.getId();
-				List<String> delcodes = new ArrayList<String>(); //削除する商品を入れるためのリスト チェックボックス入れた商品
-				System.out.println(delcodes.size());//サイズ確認テスト
+			int numOfItems = Integer.parseInt((String)request.getParameter("numOfItems"));//カートに商品が何種類あるか
+			String individualCode = null;
+			String deleteCheck = null;
+			List<String> delcodes = new ArrayList<String>(); //削除する商品を入れるためのリスト チェックボックス入れた商品
 
-				for(int i =1; i <= numOfItems; i++ ) {
-						individualCode =(String)request.getParameter("individualCode" + i);
-						deleteCheck = (String)request.getParameter("check" +i);
-						if(deleteCheck != null) {
-							delcodes.add(individualCode);
-						}
+			for(int i =1; i <= numOfItems; i++ ) {
+				individualCode =(String)request.getParameter("individualCode" + i);
+				deleteCheck = (String)request.getParameter("check" +i);
+				if(deleteCheck != null) { //チェックした商品をリストに入れる
+					delcodes.add(individualCode);
 				}
-				if(delcodes.isEmpty()) {//どのチェックボックスもnullの場合
-					response.sendRedirect("Cart?action=view_cart");
-					}else {
+			}
+			if(delcodes.isEmpty()) {//どのチェックボックスもnullの場合
+				response.sendRedirect("Cart?action=view_cart");
+				}else {
+
 					DeleteItemLogic deleteItemLogic = new DeleteItemLogic();
-					deleteItemLogic.delete(customerId, delcodes);
+
+					//---------ログインしてない場合---------
+					if (loginCustomer==null){
+						List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+						if(guestCartItems==null) {//セッションタイムアウトの場合
+							rd = request.getRequestDispatcher("index.jsp");
+							rd.forward(request, response);
+						}else {
+							guestCartItems = deleteItemLogic.delete(guestCartItems, delcodes);
+							session.setAttribute("guestCartItems", guestCartItems);
+						}
+					}
+					//---------ログイン確認できた場合----------
+					else {
+						int customerId = loginCustomer.getId();
+						deleteItemLogic.delete(customerId, delcodes);
+					}
 					String message = "選択した商品を削除しました";
 					session.setAttribute("updateMessage", message);
 					response.sendRedirect("Cart?action=view_cart");
-					}
 				}
-
 		}
 	}
 }
-
-
-
-
-
-
-
-

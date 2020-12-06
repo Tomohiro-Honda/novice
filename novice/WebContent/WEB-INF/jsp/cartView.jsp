@@ -3,7 +3,7 @@
 <%@page import="model.beans.Customer"%>
 <%@page import="model.beans.CartItem"%>
 <%@page import="java.util.List, java.util.ArrayList"%>
-<%List<CartItem> cartItems = (ArrayList<CartItem>)request.getAttribute("cartItems");  %>
+<%List<CartItem> cartItems = (List<CartItem>)session.getAttribute("cartItems");  %>
 <%int sumAll = 0; %>
 <%int codeNum = 1; %>
 <%int codeNumdl = 1; %>

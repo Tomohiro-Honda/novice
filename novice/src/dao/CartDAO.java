@@ -94,7 +94,7 @@ public class CartDAO {
 				return true;
 				}
 
-			/**-----------------------------カートに入っている商品の情報を引き出す-----------------------------------**/
+			/**-----------------------------カートに入っている商品の情報を引き出す　（ログイン時）-----------------------------------**/
 			public ResultSet viewCartItem(int customerId) {
 				try {
 					conn = DBConnection.getConnection();
@@ -107,6 +107,40 @@ public class CartDAO {
 					//INSERT文中の[？]に使用する値を設定しSQLを完成
 					pStmt.setInt(1, customerId);
 					rs = pStmt.executeQuery();
+				}catch (SQLException e) {
+					// データベースとの接続に失敗した場合
+					e.printStackTrace();
+					return null;
+				}catch (URISyntaxException e) {
+	                e.printStackTrace();
+	                return null;
+	            }
+				return rs;
+			}
+
+			/**-----------------------------ゲストカートの情報を引き出す-----------------------------------**/
+			public ResultSet viewCartItem(List<String> ivcList) {
+				try {
+					conn = DBConnection.getConnection();
+					StringBuilder sqlsb = new StringBuilder();
+					sqlsb.append("SELECT * FROM Products JOIN Product_Variation  "
+							+ "ON Products.PRODUCTCODE = Product_Variation.P_CODE WHERE INDIVIDUAL_CODE IN(");
+
+						for(int i = 0; i < ivcList.size(); i++) {
+							sqlsb.append("?");
+							if(i != ivcList.size() - 1) {
+								sqlsb.append(", ");
+							}else {
+								sqlsb.append(")");
+							}
+						String sql = sqlsb.toString();
+						pStmt = conn.prepareStatement(sql);
+						}
+						for(int i =0, n = 1; i <  ivcList.size(); i++) {
+							pStmt.setString(n++, ivcList.get(i));
+						}
+						rs = pStmt.executeQuery();
+
 				}catch (SQLException e) {
 					// データベースとの接続に失敗した場合
 					e.printStackTrace();

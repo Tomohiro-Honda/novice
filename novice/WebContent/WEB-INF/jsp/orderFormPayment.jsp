@@ -16,7 +16,6 @@
 <title>OrderConfirm</title>
 </head>
 <body>
-<% if(loginCustomer == null){response.sendRedirect("../Login?action=login");}else{%>
 	<div class="row">
     <div class="col-2"></div>
     <div class="col-8">
@@ -43,6 +42,5 @@
     </div>
     <div class="col-2"></div>
   </div>
-	<% }%>
 </body>
 </html>

@@ -100,10 +100,15 @@ public class OrderDAO {
 				int resultI = pStmt.executeUpdate();
 
 				//カートを空にする
+				int resultD = 0;
+				if(orderSheet.getId()!=1) {
 				sql = "DELETE FROM Cart_Items WHERE CUSTOMER_ID = ? ";
 				pStmt = conn.prepareStatement(sql);
 				pStmt.setInt(1, orderSheet.getId());
-				int resultD = pStmt.executeUpdate();
+				resultD = pStmt.executeUpdate();
+				}else {//ゲストの場合はスキップ
+					resultD = listSize;
+				}
 
 				//購入した商品を個数分だけ在庫をマイナスする
 				StringBuilder sqlB = new StringBuilder();

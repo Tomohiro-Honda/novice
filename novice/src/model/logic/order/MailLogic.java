@@ -24,8 +24,8 @@ public class MailLogic {
     public void thanksMail(Customer loginCustomer, int orderID) {
     	try {
 
-    		myAdress = "********@gmail.com";
-    		myPass = "********";
+    		myAdress = "novice6699@gmail.com";
+    		myPass = "**********";
     		mailAdress = loginCustomer.getMail();
     		mailTo = loginCustomer.getLastName() + loginCustomer.getFirstName() + "様";
 
@@ -36,7 +36,9 @@ public class MailLogic {
     		sbMessage.append("ご注文いただいた商品は存在しません。\n");
     		sbMessage.append("いつか気が向いて作ったらご送付いたします。\n");
     		sbMessage.append("それまでどうか気長にお待ちいただければ幸いです。\n");
+    		if(loginCustomer.getId()!=1) {//ゲスト購入では無い場合
     		sbMessage.append("ご注文内容はマイページの『注文履歴』から確認できます。\n");
+    		}
     		sbMessage.append("\n");
     		sbMessage.append("今後ともnovice online shopをご愛顧賜りますよう、\n");
     		sbMessage.append("よろしくお願いいたします。\n");

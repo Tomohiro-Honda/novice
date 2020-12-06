@@ -48,13 +48,18 @@ public class Order extends HttpServlet {
 		//「注文」をリクエストされたときの処理。送り先、支払いなどのフォーム記入画面へ
 				if(action.equals("order_form")) {
 					Customer loginCustomer = (Customer)session.getAttribute("login_customer");
-					//セッションが切れで再ログインの場合
+					//ログインしていない場合
 					if(loginCustomer==null) {
-						response.sendRedirect("Login?action=login");
+						List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+						if(guestCartItems == null) {//セッション切れの場合
+							rd =request.getRequestDispatcher("index.jsp");
+						}else {
+						rd =request.getRequestDispatcher("/WEB-INF/jsp/orderFormAdressGuest.jsp");
+						}
 					}else {
 					rd =request.getRequestDispatcher("/WEB-INF/jsp/orderFormAdress.jsp");
-					rd.forward(request, response);
 					}
+					rd.forward(request, response);
 				}
 	}
 
@@ -65,100 +70,136 @@ public class Order extends HttpServlet {
 		String action = request.getParameter("action");
 		RequestDispatcher rd = null;
 
-		/**------------------------支払い情報入力画面のリクエスト------------------------**/
+		/**------------------------支払い情報入力画面のリクエスト-------------------------**/
 		if(action.equals("payment")) {
 			Customer loginCustomer = (Customer)session.getAttribute("login_customer");
+			Customer sendCustomer = new Customer();
 			//ログイン確認
 			if(loginCustomer==null) {
-				response.sendRedirect("Login?action=login");
+				List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+				if(guestCartItems == null) {//セッション切れの場合
+					rd =request.getRequestDispatcher("index.jsp");
+				}else {
+					sendCustomer.setFirstName(request.getParameter("firstName"));
+					sendCustomer.setLastName(request.getParameter("lastName"));
+					sendCustomer.setPostal(request.getParameter("zip01"));
+					sendCustomer.setPref(request.getParameter("pref01"));
+					sendCustomer.setMuni(request.getParameter("addr01"));
+					sendCustomer.setStAd(request.getParameter("stAd"));
+					sendCustomer.setTell(request.getParameter("tell"));
+					sendCustomer.setMail(request.getParameter("mail"));
+					session.setAttribute("send_customer", sendCustomer);
+					rd = request.getRequestDispatcher("/WEB-INF/jsp/orderFormPayment.jsp");
+				}
+
 			}else {
-				Customer sendCustomer = new Customer();
 				//会員の住所とは異なる住所へ送る場合
 				if(request.getParameter("not_to_customer")!=null) {
 					sendCustomer.setFirstName(request.getParameter("firstName"));
 					sendCustomer.setLastName(request.getParameter("lastName"));
-					sendCustomer.setPostal(request.getParameter("postal"));
-					sendCustomer.setPref(request.getParameter("pref"));
-					sendCustomer.setMuni(request.getParameter("muni"));
+					sendCustomer.setPostal(request.getParameter("zip01"));
+					sendCustomer.setPref(request.getParameter("pref01"));
+					sendCustomer.setMuni(request.getParameter("addr01"));
 					sendCustomer.setStAd(request.getParameter("stAd"));
 					sendCustomer.setTell(request.getParameter("tell"));
+					sendCustomer.setMail(request.getParameter("mail"));
 				}else{
 					sendCustomer = loginCustomer;
 				}
 				session.setAttribute("send_customer", sendCustomer);
 				rd = request.getRequestDispatcher("/WEB-INF/jsp/orderFormPayment.jsp");
-				rd.forward(request, response);
 			}
+			rd.forward(request, response);
 		}
 
 		/**------------------------注文確認画面へ進む------------------------**/
 		if(action.equals("confirm")) {
 			Customer loginCustomer = (Customer)session.getAttribute("login_customer");
+			CartViewLogic cartViewLogic = new CartViewLogic(); //注文確認画面で表示するカートの商品リストを用意
+			List<CartItem> cartItems = null;
 			//ログイン確認
 			if(loginCustomer==null) {
-				response.sendRedirect("Login?action=login");
+				List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+				if(guestCartItems == null) {//セッション切れの場合
+					rd =request.getRequestDispatcher("index.jsp");
+				}else {
+					cartItems = cartViewLogic.viewCart(guestCartItems);
+					OrderSheet orderSheet = new OrderSheet();
+					orderSheet.setOrderItems(cartItems); //購入する商品の情報をセット
+					String payment = (String)request.getParameter("payment");
+					orderSheet.setPayment(payment);//支払い方法の情報をセット
+					session.setAttribute("order_sheet", orderSheet);
+					rd = request.getRequestDispatcher("/WEB-INF/jsp/orderConfirm.jsp");
+				}
 			}else {
-				CartViewLogic cartViewLogic = new CartViewLogic(); //注文確認画面で表示するカートの商品リストを用意
 				int customerId = loginCustomer.getId();
-				List<CartItem> cartItems = cartViewLogic.viewCart(customerId);
+				cartItems = cartViewLogic.viewCart(customerId);
 				OrderSheet orderSheet = new OrderSheet();
 				orderSheet.setOrderItems(cartItems); //購入する商品の情報をセット
 				String payment = (String)request.getParameter("payment");
 				orderSheet.setPayment(payment);//支払い方法の情報をセット
 				session.setAttribute("order_sheet", orderSheet);
 				rd = request.getRequestDispatcher("/WEB-INF/jsp/orderConfirm.jsp");
-				rd.forward(request, response);
 			}
+			rd.forward(request, response);
 		}
 
 		/**------------------------注文完了処理------------------------**/
 		if(action.equals("ordered")) {
 			Customer loginCustomer = (Customer)session.getAttribute("login_customer");
-			//ログイン確認
-			if(loginCustomer==null) {
-				response.sendRedirect("Login?action=login");
+			Customer sendCustomer = (Customer)session.getAttribute("send_customer");
+			OrderSheet orderSheet = (OrderSheet)session.getAttribute("order_sheet");
+			FinalCheckLogic finalCheckLogic = new FinalCheckLogic();
+			List<CartItem> guestCartItems = (List<CartItem>)session.getAttribute("guestCartItems");
+
+
+			if(orderSheet==null) {
+				//オーダーシートセッション切れの場合はトップページへ返す
+				rd =request.getRequestDispatcher("index.jsp");
 			}else {
-				//更新再リクエスト対策
-				if((OrderSheet)session.getAttribute("order_sheet")== null) {
-					rd = request.getRequestDispatcher("/index.jsp");
-					rd.forward(request, response);
-				}else {
-					Customer sendCustomer = (Customer)session.getAttribute("send_customer");
-					OrderSheet orderSheet = (OrderSheet)session.getAttribute("order_sheet");
-					//注文する商品の在庫数を引き出す。
-					FinalCheckLogic finalCheckLogic = new FinalCheckLogic();
-					List<Product> stockList = finalCheckLogic.getStockList(orderSheet.getOrderItems());
-					//在庫数を超えている商品をリストに入れる。
-					List<CartItem> alertList = finalCheckLogic.finalCheck(stockList, orderSheet.getOrderItems());
+				//注文する商品の在庫数を引き出す。
+				List<Product> stockList = finalCheckLogic.getStockList(orderSheet.getOrderItems());
+				//在庫数を超えている商品をリストに入れる。
+				List<CartItem> alertList = finalCheckLogic.finalCheck(stockList, orderSheet.getOrderItems());
+				if(alertList.isEmpty()) {//在庫数を超えている商品がなければ注文完了画面を出す。
+					//orderSheetインスタンスに情報を格納する
+					if(loginCustomer==null) {
+						orderSheet.setId(1);//ゲストの場合は1
+					}else {
+					orderSheet.setId(loginCustomer.getId());//ログインユーザーのID
+					}
+					orderSheet.setDestinationPostal(sendCustomer.getPostal()); //届け先郵便番号
 
-					if(alertList.isEmpty()) {//在庫数を超えている商品がなければ注文完了画面を出す。
-						//orderSheetインスタンスに情報を格納する
-						orderSheet.setId(loginCustomer.getId());//注文者ID
-						orderSheet.setDestinationPostal(sendCustomer.getPostal()); //届け先郵便番号
+					StringBuilder destination = new StringBuilder();///////////////
+					destination.append(sendCustomer.getPref());//                          //
+					destination.append(sendCustomer.getMuni());//   届け先住所   //
+					destination.append(sendCustomer.getStAd());//                      //
+					orderSheet.setDestinationAdress(destination.toString());////
 
-						StringBuilder destination = new StringBuilder();///////////////
-						destination.append(sendCustomer.getPref());//                          //
-						destination.append(sendCustomer.getMuni());//   届け先住所   //
-						destination.append(sendCustomer.getStAd());//                      //
-						orderSheet.setDestinationAdress(destination.toString());////
+					orderSheet.setShipPrice(Integer.parseInt((String)request.getParameter("shipping_value"))); //送料
+					orderSheet.setCodPrice(Integer.parseInt((String)request.getParameter("cod_value"))); //手数料
+					orderSheet.setTotalPrice(Integer.parseInt((String)request.getParameter("total_value"))); //合計金額
 
-						orderSheet.setShipPrice(Integer.parseInt((String)request.getParameter("shipping_value"))); //送料
-						orderSheet.setCodPrice(Integer.parseInt((String)request.getParameter("cod_value"))); //手数料
-						orderSheet.setTotalPrice(Integer.parseInt((String)request.getParameter("total_value"))); //合計金額
-
-						//データベースへ注文情報を書き込む、カートの中身を空にする。
-						OrderAcceptedLogic orderAcceptedLogic = new OrderAcceptedLogic();
-						Timestamp time = orderAcceptedLogic.orderDone(orderSheet);
-						if(time != null) {
-							//注文ありがとうございましたページへ移動、注文確認メールを送信
+					//データベースへ注文情報を書き込む、カートの中身を空にする。
+					OrderAcceptedLogic orderAcceptedLogic = new OrderAcceptedLogic();
+					Timestamp time = orderAcceptedLogic.orderDone(orderSheet);
+					if(time != null) {
+						//注文ありがとうございましたページへ移動、注文確認メールを送信
+						MailLogic mailLogic = new MailLogic();
+						if(loginCustomer==null) {
+							int id = 1;
+							int orderID = orderAcceptedLogic.getOrderID(id, time);
+							mailLogic.thanksMail(sendCustomer, orderID);
+						}else {
 							int id = loginCustomer.getId();
 							int orderID = orderAcceptedLogic.getOrderID(id, time);
-							MailLogic mailLogic = new MailLogic();
 							mailLogic.thanksMail(loginCustomer, orderID);
-							session.removeAttribute("order_sheet");
-							session.removeAttribute("send_customer");
-							rd = request.getRequestDispatcher("/WEB-INF/jsp/orderDone.jsp");
-							rd.forward(request, response);
+						}
+						session.removeAttribute("order_sheet");
+						session.removeAttribute("send_customer");
+						session.removeAttribute("guestCartItems");
+						rd = request.getRequestDispatcher("/WEB-INF/jsp/orderDone.jsp");
+						rd.forward(request, response);
 						}else {
 							rd = request.getRequestDispatcher("/index.jsp");//注文失敗ページを作る
 							session.removeAttribute("order_sheet");
@@ -201,6 +242,6 @@ public class Order extends HttpServlet {
 			}
 		}
 	}
-	}
+
 
 
