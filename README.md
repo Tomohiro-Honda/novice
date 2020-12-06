@@ -1,12 +1,12 @@
 # novice
-<h2>Java ServletとJSPの学習でECサイトを作成</h2>
+<h3>Java ServletとJSPの学習でECサイトを作成</h3>
 
 <label>ECサイトURL：</label>
 <a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>
 
-<p>【ログインに使用可能なデモアカウント】</p>
-<p>メールアドレス：novice6699@gmail.com</p>
-<p>パスワード：test123</p>
+<p>【ログインに使用可能なデモアカウント】<br>
+メールアドレス：novice6699@gmail.com<br>
+パスワード：test123</p>
 
 <ul>【実装した機能】
   <li>ユーザー登録機能</li>
