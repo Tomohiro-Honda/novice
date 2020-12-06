@@ -1,6 +1,6 @@
 # novice
 <h3>Java ServletとJSPの学習でECサイトを作成</h3>
-
+<br>
 <label>ECサイトURL：</label>
 <a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>
 <p>注）サイトで注文しても実際に商品が届いたり請求が来ることはありません。</p>
