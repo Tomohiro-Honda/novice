@@ -1,5 +1,12 @@
 # novice
-<p>Java ServletとJSPの学習でECサイトを作成中</p>
+<p>Java ServletとJSPの学習でECサイトを作成</p>
+
+<label>ECサイトURL：</label>
+<a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>
+
+<p>【ログインに使用可能なデモアカウント】</p>
+<p>メールアドレス：novice6699@gmail.com</p>
+<p>パスワード：test123</p>
 
 <ul>実装する機能
   <li>ユーザー登録機能</li>
@@ -7,15 +14,20 @@
   <li>ユーザー情報確認、変更</li>
   <li>商品一覧表示</li>
   <li>商品詳細表示</li>
+  <li>商品検索機能（キーワード、カテゴリー）</li>
   <li>買い物カゴ</li>
   <li>注文機能</li>
   <li>注文履歴閲覧</li>
 </ul>
 
-<p>注文機能と注文履歴閲覧の作成には取り掛かっていない。<p>
-
 <p>設計の概要は以下の図の通り</p>
 
-<img width="700" alt="画面遷移模式図" src="https://user-images.githubusercontent.com/72595362/98344758-0dc21980-2057-11eb-9bbb-d43d00a44834.png">
+<img width="700" alt="画面遷移模式図" src="https://user-images.githubusercontent.com/72595362/101286684-3d6b6980-382f-11eb-9a00-67e02bd4f5c0.jpg">
 
-<img width="900" alt="JSP、Java、データベースとの関係" src="https://user-images.githubusercontent.com/72595362/98344837-2af6e800-2057-11eb-9d2b-274dd5ba796b.png">
+<img width="900" alt="JSP、Java、データベースとの関係" src="https://user-images.githubusercontent.com/72595362/101286623-d9e13c00-382e-11eb-9dd9-bbdce11dc057.jpg">
+
+<ul>今後の改善予定
+  <li>スマホ・タブレット閲覧対応（カートページ未対応）</li>
+  <li>ユーザー登録機能を二段階に（仮登録、メール認証後に本登録）</li>
+  <li>新商品追加などのサイト側の管理機能</li>
+</ul>
