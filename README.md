@@ -1,7 +1,6 @@
 # novice
 <h3>Java ServletとJSPの学習でECサイトを作成</h3>
 <br>
-<!-- 
 <label>ECサイトURL：</label>\
 <a href="https://desolate-bayou-19208.herokuapp.com/">https://desolate-bayou-19208.herokuapp.com/</a>\
 <p>注）サイトで注文しても実際に商品が届いたり請求が来ることはありません。</p>\
@@ -11,7 +10,6 @@
 ログインせずゲストとしても買い物できますが、ログインするとマイページや購入履歴が見れます。<br>\
 </p>
 <br>
--->
 <ul>【実装した機能】
   <li>ユーザー登録機能</li>
   <li>ログイン機能</li>
